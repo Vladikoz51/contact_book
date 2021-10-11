@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../resources/fonts/open-sans-v23-latin-regular.woff2') format('woff2'),
+  url('../resources/fonts/open-sans-v23-latin-regular.woff') format('woff'),
+  url('../resources/fonts/open-sans-v23-latin-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../resources/fonts/mulish-v5-latin-regular.woff2') format('woff2'),
+  url('../resources/fonts/mulish-v5-latin-regular.woff') format('woff'),
+  url('../resources/fonts/mulish-v5-latin-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../resources/fonts/roboto-v27-latin-regular.woff2') format('woff2'),
+  url('../resources/fonts/roboto-v27-latin-regular.woff') format('woff'),
+  url('../resources/fonts/roboto-v27-latin-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../resources/fonts/lato-v20-latin-regular.woff2') format('woff2'),
+  url('../resources/fonts/lato-v20-latin-regular.woff') format('woff'),
+  url('../resources/fonts/lato-v20-latin-regular.ttf') format('truetype');
+}
+
+@mixin font-mixin($text-color: black, $font-size: 1.25rem, $text-font: ('Mulish', sans-serif)) {
+  font-size: $font-size;
+  line-height: 100%;
+  font-family: $text-font;
+  color: $text-color;
+}
+

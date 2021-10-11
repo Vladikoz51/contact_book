@@ -1,0 +1,502 @@
+@import "fonts";
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  padding: 8px 20px;
+  @include font-mixin(black, 1.25rem, ('Roboto', sans-serif));
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+}
+
+header {
+  background-color: rgba(62,78,117,100);
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 10px;
+  justify-content: center;
+  padding: 20px 10px;
+  position: relative;
+
+  h1 {
+    @include font-mixin(white, 1.5rem, ('Open Sans', sans-serif));
+    text-align: center;
+  }
+
+  .authorisation {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+
+    .header-btn {
+      @include font-mixin();
+      text-decoration: none;
+      padding: 10px 30px;
+      cursor: pointer;
+    }
+
+    #register-btn {
+      background-color: rgba(248, 173, 27, 1);
+      margin-right: 20px;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgb(193, 234, 13);
+      }
+    }
+
+    #log-in-btn {
+      background-color: rgba(27, 248, 102, 1);
+      border-radius: 10px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgb(27, 248, 207);
+      }
+    }
+
+    #logout-icon-container {
+      display: none;
+    }
+
+    #logout-icon {
+      &:hover {
+        fill: rgba(248, 173, 27, 1);
+      }
+    }
+
+    .welcome-message {
+      @include font-mixin(white, 1rem, ('Open Sans', sans-serif));
+      margin-right: 15px;
+
+      b {
+        color: #f8ad1b;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .form-container {
+    position: absolute;
+    top: 114px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #71b688;
+    @include font-mixin(black, 1rem, ('Lato', sans-serif));
+    border-radius: 8px;
+
+    form {
+      display: grid;
+      grid-template-columns: 250px;
+      padding: 20px;
+      grid-row-gap: 20px;
+
+      .input-container {
+        display: grid;
+        grid-row-gap: 10px;
+
+        .form-input {
+          padding: 5px 10px;
+          min-width: 200px;
+          font-size: 1rem;
+
+        }
+      }
+
+      p {
+        @include font-mixin(#5e3a29, 0.8rem, ('Lato', sans-serif));
+      }
+
+      .register-button, .log-in-button {
+        background-color: rgba(248, 173, 27, 1);
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: rgb(27, 248, 207);
+        }
+      }
+    }
+  }
+
+  .register-container,
+  .log-in-container,
+  .popup {
+    display: none;
+  }
+
+  .popup {
+    position: absolute;
+    background-color: #71b688;
+    padding: 10px;
+    border: 2px solid black;
+    outline: #71b688 solid 10px;
+    border-radius: 10px;
+    max-width: 200px;
+
+    p {
+      @include font-mixin(black, 1.2rem, ('Lato', sans-serif));
+      //max-width: 150px;
+      text-align: center;
+    }
+
+    button {
+      max-width: 150px;
+      padding: 10px 30px;
+      background-color: rgba(248, 173, 27, 1);
+    }
+  }
+
+  .popup-visible {
+    display: grid;
+    justify-content: center;
+    top: 150px;
+    grid-template-columns: auto;
+    justify-items: center;
+    grid-row-gap: 15px;
+  }
+
+}
+
+.contacts {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  grid-row-gap: 20px;
+  padding: 20px;
+
+  #add-contact-btn {
+    display: none;
+    @include font-mixin(black, 1.5rem);
+    border: none;
+    background-color: rgba(96, 222, 65, 1);
+    padding: 10px 30px;
+    border-radius: 10px;
+    justify-self: center;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #b366d2;
+    }
+  }
+
+  .contact-form-container {
+    display: none;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #71b688;
+    @include font-mixin(black, 1rem, ('Lato', sans-serif));
+    border-radius: 8px;
+
+    form {
+      display: grid;
+      grid-template-columns: auto;
+      padding: 20px 30px;
+      grid-row-gap: 5px;
+
+      .input-container {
+        display: grid;
+        grid-row-gap: 10px;
+
+        .form-input {
+          padding: 5px 10px;
+          min-width: 200px;
+          font-size: 1rem;
+
+        }
+      }
+
+      p {
+        @include font-mixin(#5e3a29, 0.8rem, ('Lato', sans-serif));
+      }
+
+      .add-field-button {
+        margin-top: 10px;
+        background-color: rgb(174, 245, 30);
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: rgb(245, 216, 30);
+        }
+
+        &:disabled {
+          background-color: darkgray;
+        }
+      }
+
+      .delete-field-button {
+        margin-top: 10px;
+        background-color: rgb(245, 62, 30);
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: rgb(245, 216, 30);
+        }
+
+        &:disabled {
+          background-color: darkgray;
+        }
+      }
+
+
+      .save-contact-button {
+        margin-top: 10px;
+        background-color: rgba(248, 173, 27, 1);
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: rgba(27, 248, 102, 1);
+        }
+      }
+
+      .custom-field-pair-container {
+        display: grid;
+        grid-row-gap: 5px;
+      }
+    }
+  }
+
+  .contacts-list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+
+  .contact-item {
+    padding: 15px 10px;
+    border: 1px solid #242498;
+    display: grid;
+    grid-template-columns: auto;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    margin: 5px;
+  }
+
+  .contact-item__name {
+    @include font-mixin(black, 1.5rem);
+    text-align: center;
+  }
+
+  .contact-item__buttons-container {
+    margin-top: 15px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+
+  .contact-item__info,
+  .contact-item__delete-btn {
+    @include font-mixin();
+    text-decoration: none;
+    padding: 10px;
+    background-color: rgba(26, 145, 231, 1);
+    border-radius: 10px;
+    text-align: center;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgba(248, 173, 27, 1);
+    }
+  }
+
+  .contact-item__delete-btn {
+    border: none;
+    background-color: rgba(249, 38, 38, 1);
+    margin-left: 15px;
+  }
+
+  .contact-item__delete-popup {
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    border: 1px solid #5151bb;
+    padding: 10px 20px;
+    transform: translateX(-50%);
+    border-radius: 8px;
+    display: none;
+
+    p {
+      text-align: center;
+      margin-bottom: 5px;
+      @include font-mixin(black, 1rem, ('Roboto', sans-serif));
+
+    }
+
+    .contact-item__delete-popup-buttons-container {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-column-gap: 48px;
+    }
+
+    .contact-item__delete-popup-yes-button,
+    .contact-item__delete-popup-no-button {
+      background-color: rgba(248, 173, 27, 1);
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgb(27, 248, 207);
+      }
+
+      &:disabled {
+        background-color: darkgray;
+      }
+    }
+  }
+
+  .contact-item-delete-connection-failure-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid #5151bb;
+    padding: 10px 20px;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    background-color: #e4ece7;
+    min-width: 200px;
+    grid-template-columns: auto;
+    grid-row-gap: 15px;
+    display: none;
+
+
+    p {
+      text-align: center;
+      @include font-mixin(black, 1rem, ('Roboto', sans-serif));
+    }
+
+    button {
+      background-color: rgba(248, 173, 27, 1);
+      min-width: 50px;
+      justify-self: center;
+    }
+
+
+  }
+}
+
+.contact-item__contact-info-container {
+  background-color: #71b688;
+  @include font-mixin(black, 1rem, ('Lato', sans-serif));
+  border-radius: 8px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  max-height: 0;
+  margin-top: 15px;
+
+  form {
+    display: grid;
+    grid-template-columns: auto;
+    grid-row-gap: 10px;
+    padding: 10px;
+  }
+
+  .input-container {
+    display: grid;
+    grid-template-columns: 208px;
+    grid-gap: 5px;
+  }
+
+  .form-input {
+    font-size: 1rem;
+    padding: 5px;
+
+    &:disabled {
+      background-color: whitesmoke;
+      border: none;
+      border-radius: 2px;
+    }
+  }
+
+  .contact-info-edit-button {
+    background-color: #f38020;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgb(193, 234, 13);
+    }
+
+    &:disabled {
+      background-color: darkgray;
+    }
+  }
+
+  .contact-item-save-and-add-buttons-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 15px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    max-height: 0;
+
+
+    .contact-info-add-field-button {
+      background-color: #e7f51e;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgb(27, 248, 207);
+      }
+
+      &:disabled {
+        background-color: darkgray;
+      }
+    }
+
+    .save-contact-item-button {
+      background-color: #60ef28;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgb(27, 248, 207);
+      }
+
+      &:disabled {
+        background-color: darkgray;
+      }
+    }
+  }
+}
+
+footer {
+  padding: 20px 40px;
+  background-color: rgba(33, 29, 26, 1);
+  margin-top: 15px;
+}
+.signature {
+  @include font-mixin(white, 1rem);
+  font-style: italic;
+  text-align: right;
+}
+
+@media only screen  and (min-width: 600px) {
+  header {
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .contacts .contact-item {
+    margin: 10px;
+  }
+}

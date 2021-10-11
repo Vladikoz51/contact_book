@@ -1,0 +1,495 @@
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../resources/fonts/open-sans-v23-latin-regular.woff2") format("woff2"), url("../resources/fonts/open-sans-v23-latin-regular.woff") format("woff"), url("../resources/fonts/open-sans-v23-latin-regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../resources/fonts/mulish-v5-latin-regular.woff2") format("woff2"), url("../resources/fonts/mulish-v5-latin-regular.woff") format("woff"), url("../resources/fonts/mulish-v5-latin-regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../resources/fonts/roboto-v27-latin-regular.woff2") format("woff2"), url("../resources/fonts/roboto-v27-latin-regular.woff") format("woff"), url("../resources/fonts/roboto-v27-latin-regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../resources/fonts/lato-v20-latin-regular.woff2") format("woff2"), url("../resources/fonts/lato-v20-latin-regular.woff") format("woff"), url("../resources/fonts/lato-v20-latin-regular.ttf") format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  padding: 8px 20px;
+  font-size: 1.25rem;
+  line-height: 100%;
+  font-family: "Roboto", sans-serif;
+  color: black;
+  border-radius: 5px;
+}
+button:hover {
+  cursor: pointer;
+}
+button:last-child {
+  margin-right: 0;
+}
+
+header {
+  background-color: #3e4e75;
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 10px;
+  justify-content: center;
+  padding: 20px 10px;
+  position: relative;
+}
+header h1 {
+  font-size: 1.5rem;
+  line-height: 100%;
+  font-family: "Open Sans", sans-serif;
+  color: white;
+  text-align: center;
+}
+header .authorisation {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+header .authorisation .header-btn {
+  font-size: 1.25rem;
+  line-height: 100%;
+  font-family: "Mulish", sans-serif;
+  color: black;
+  text-decoration: none;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+header .authorisation #register-btn {
+  background-color: #f8ad1b;
+  margin-right: 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+header .authorisation #register-btn:hover {
+  background-color: #c1ea0d;
+}
+header .authorisation #log-in-btn {
+  background-color: #1bf866;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+header .authorisation #log-in-btn:hover {
+  background-color: #1bf8cf;
+}
+header .authorisation #logout-icon-container {
+  display: none;
+}
+header .authorisation #logout-icon:hover {
+  fill: #f8ad1b;
+}
+header .authorisation .welcome-message {
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Open Sans", sans-serif;
+  color: white;
+  margin-right: 15px;
+}
+header .authorisation .welcome-message b {
+  color: #f8ad1b;
+  font-size: 1.2rem;
+}
+header .form-container {
+  position: absolute;
+  top: 114px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #71b688;
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Lato", sans-serif;
+  color: black;
+  border-radius: 8px;
+}
+header .form-container form {
+  display: grid;
+  grid-template-columns: 250px;
+  padding: 20px;
+  grid-row-gap: 20px;
+}
+header .form-container form .input-container {
+  display: grid;
+  grid-row-gap: 10px;
+}
+header .form-container form .input-container .form-input {
+  padding: 5px 10px;
+  min-width: 200px;
+  font-size: 1rem;
+}
+header .form-container form p {
+  font-size: 0.8rem;
+  line-height: 100%;
+  font-family: "Lato", sans-serif;
+  color: #5e3a29;
+}
+header .form-container form .register-button, header .form-container form .log-in-button {
+  background-color: #f8ad1b;
+  transition: background-color 0.3s;
+}
+header .form-container form .register-button:hover, header .form-container form .log-in-button:hover {
+  background-color: #1bf8cf;
+}
+header .register-container,
+header .log-in-container,
+header .popup {
+  display: none;
+}
+header .popup {
+  position: absolute;
+  background-color: #71b688;
+  padding: 10px;
+  border: 2px solid black;
+  outline: #71b688 solid 10px;
+  border-radius: 10px;
+  max-width: 200px;
+}
+header .popup p {
+  font-size: 1.2rem;
+  line-height: 100%;
+  font-family: "Lato", sans-serif;
+  color: black;
+  text-align: center;
+}
+header .popup button {
+  max-width: 150px;
+  padding: 10px 30px;
+  background-color: #f8ad1b;
+}
+header .popup-visible {
+  display: grid;
+  justify-content: center;
+  top: 150px;
+  grid-template-columns: auto;
+  justify-items: center;
+  grid-row-gap: 15px;
+}
+
+.contacts {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  grid-row-gap: 20px;
+  padding: 20px;
+}
+.contacts #add-contact-btn {
+  display: none;
+  font-size: 1.5rem;
+  line-height: 100%;
+  font-family: "Mulish", sans-serif;
+  color: black;
+  border: none;
+  background-color: #60de41;
+  padding: 10px 30px;
+  border-radius: 10px;
+  justify-self: center;
+  transition: background-color 0.3s;
+}
+.contacts #add-contact-btn:hover {
+  background-color: #b366d2;
+}
+.contacts .contact-form-container {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #71b688;
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Lato", sans-serif;
+  color: black;
+  border-radius: 8px;
+}
+.contacts .contact-form-container form {
+  display: grid;
+  grid-template-columns: auto;
+  padding: 20px 30px;
+  grid-row-gap: 5px;
+}
+.contacts .contact-form-container form .input-container {
+  display: grid;
+  grid-row-gap: 10px;
+}
+.contacts .contact-form-container form .input-container .form-input {
+  padding: 5px 10px;
+  min-width: 200px;
+  font-size: 1rem;
+}
+.contacts .contact-form-container form p {
+  font-size: 0.8rem;
+  line-height: 100%;
+  font-family: "Lato", sans-serif;
+  color: #5e3a29;
+}
+.contacts .contact-form-container form .add-field-button {
+  margin-top: 10px;
+  background-color: #aef51e;
+  transition: background-color 0.3s;
+}
+.contacts .contact-form-container form .add-field-button:hover {
+  background-color: #f5d81e;
+}
+.contacts .contact-form-container form .add-field-button:disabled {
+  background-color: darkgray;
+}
+.contacts .contact-form-container form .delete-field-button {
+  margin-top: 10px;
+  background-color: #f53e1e;
+  transition: background-color 0.3s;
+}
+.contacts .contact-form-container form .delete-field-button:hover {
+  background-color: #f5d81e;
+}
+.contacts .contact-form-container form .delete-field-button:disabled {
+  background-color: darkgray;
+}
+.contacts .contact-form-container form .save-contact-button {
+  margin-top: 10px;
+  background-color: #f8ad1b;
+  transition: background-color 0.3s;
+}
+.contacts .contact-form-container form .save-contact-button:hover {
+  background-color: #1bf866;
+}
+.contacts .contact-form-container form .custom-field-pair-container {
+  display: grid;
+  grid-row-gap: 5px;
+}
+.contacts .contacts-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+.contacts .contact-item {
+  padding: 15px 10px;
+  border: 1px solid #242498;
+  display: grid;
+  grid-template-columns: auto;
+  border-radius: 15px;
+  cursor: pointer;
+  position: relative;
+  margin: 5px;
+}
+.contacts .contact-item__name {
+  font-size: 1.5rem;
+  line-height: 100%;
+  font-family: "Mulish", sans-serif;
+  color: black;
+  text-align: center;
+}
+.contacts .contact-item__buttons-container {
+  margin-top: 15px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.contacts .contact-item__info,
+.contacts .contact-item__delete-btn {
+  font-size: 1.25rem;
+  line-height: 100%;
+  font-family: "Mulish", sans-serif;
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+  background-color: #1a91e7;
+  border-radius: 10px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+.contacts .contact-item__info:hover,
+.contacts .contact-item__delete-btn:hover {
+  background-color: #f8ad1b;
+}
+.contacts .contact-item__delete-btn {
+  border: none;
+  background-color: #f92626;
+  margin-left: 15px;
+}
+.contacts .contact-item__delete-popup {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  border: 1px solid #5151bb;
+  padding: 10px 20px;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  display: none;
+}
+.contacts .contact-item__delete-popup p {
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Roboto", sans-serif;
+  color: black;
+}
+.contacts .contact-item__delete-popup .contact-item__delete-popup-buttons-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 48px;
+}
+.contacts .contact-item__delete-popup .contact-item__delete-popup-yes-button,
+.contacts .contact-item__delete-popup .contact-item__delete-popup-no-button {
+  background-color: #f8ad1b;
+  transition: background-color 0.3s;
+}
+.contacts .contact-item__delete-popup .contact-item__delete-popup-yes-button:hover,
+.contacts .contact-item__delete-popup .contact-item__delete-popup-no-button:hover {
+  background-color: #1bf8cf;
+}
+.contacts .contact-item__delete-popup .contact-item__delete-popup-yes-button:disabled,
+.contacts .contact-item__delete-popup .contact-item__delete-popup-no-button:disabled {
+  background-color: darkgray;
+}
+.contacts .contact-item-delete-connection-failure-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid #5151bb;
+  padding: 10px 20px;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background-color: #e4ece7;
+  min-width: 200px;
+  grid-template-columns: auto;
+  grid-row-gap: 15px;
+  display: none;
+}
+.contacts .contact-item-delete-connection-failure-popup p {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Roboto", sans-serif;
+  color: black;
+}
+.contacts .contact-item-delete-connection-failure-popup button {
+  background-color: #f8ad1b;
+  min-width: 50px;
+  justify-self: center;
+}
+
+.contact-item__contact-info-container {
+  background-color: #71b688;
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Lato", sans-serif;
+  color: black;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  max-height: 0;
+  margin-top: 15px;
+}
+.contact-item__contact-info-container form {
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 10px;
+  padding: 10px;
+}
+.contact-item__contact-info-container .input-container {
+  display: grid;
+  grid-template-columns: 208px;
+  grid-gap: 5px;
+}
+.contact-item__contact-info-container .form-input {
+  font-size: 1rem;
+  padding: 5px;
+}
+.contact-item__contact-info-container .form-input:disabled {
+  background-color: whitesmoke;
+  border: none;
+  border-radius: 2px;
+}
+.contact-item__contact-info-container .contact-info-edit-button {
+  background-color: #f38020;
+  transition: background-color 0.3s;
+}
+.contact-item__contact-info-container .contact-info-edit-button:hover {
+  background-color: #c1ea0d;
+}
+.contact-item__contact-info-container .contact-info-edit-button:disabled {
+  background-color: darkgray;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 15px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  max-height: 0;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container .contact-info-add-field-button {
+  background-color: #e7f51e;
+  transition: background-color 0.3s;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container .contact-info-add-field-button:hover {
+  background-color: #1bf8cf;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container .contact-info-add-field-button:disabled {
+  background-color: darkgray;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container .save-contact-item-button {
+  background-color: #60ef28;
+  transition: background-color 0.3s;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container .save-contact-item-button:hover {
+  background-color: #1bf8cf;
+}
+.contact-item__contact-info-container .contact-item-save-and-add-buttons-container .save-contact-item-button:disabled {
+  background-color: darkgray;
+}
+
+footer {
+  padding: 20px 40px;
+  background-color: #211d1a;
+  margin-top: 15px;
+}
+
+.signature {
+  font-size: 1rem;
+  line-height: 100%;
+  font-family: "Mulish", sans-serif;
+  color: white;
+  font-style: italic;
+  text-align: right;
+}
+
+@media only screen and (min-width: 600px) {
+  header {
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .contacts .contact-item {
+    margin: 10px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
