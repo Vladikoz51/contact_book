@@ -70,9 +70,11 @@ function validateRegForm() {
 
 // функция для добавления контакта в книгу контактов
 function createContactItem(id, firstName, lastName, phone, email, other) {
+    // создаем элемент списка контактов
     const contactItem = document.createElement("li");
     contactItem.className = "contact-item";
 
+    // заполняем его кнопками и формой в которой будут отображаться данные из БД
     let content =
         `<p class="contact-item__name">${firstName} ${lastName}</p>
         <div class="contact-item__buttons-container">
@@ -110,6 +112,7 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
               <input type="email" class="form-input" id="contact-info-email" name="contact-info-email" value="${email}" maxlength="320" disabled>
             </div>`;
 
+    // здесь поля которые создал пользователь из JSON строки превращаются в поля формы
     if (other !== "") {
         other = JSON.parse(other);
         let customFields = ``;
@@ -123,6 +126,7 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         content += customFields;
     }
 
+    // добавляем кнопки для редактирования существующих полей, добавления новых и сохранения результата в БД
     content +=
         `<button type="button" class="contact-info-edit-button">
           <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M3,21l3.75,0L17.81,9.94l-3.75-3.75L3,17.25L3,21z M5,18.08l9.06-9.06l0.92,0.92L5.92,19L5,19L5,18.08z"/></g><g><path d="M18.37,3.29c-0.39-0.39-1.02-0.39-1.41,0l-1.83,1.83l3.75,3.75l1.83-1.83c0.39-0.39,0.39-1.02,0-1.41L18.37,3.29z"/></g></g></g></svg>
@@ -137,8 +141,10 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
     </div>`;
 
     contactItem.innerHTML = content;
+    // добавляем контакт в конец списка контактов
     contactList.appendChild(contactItem);
 
+    // задаем элементы для дальнейшего создания обработчиков событий
     const deleteContactBtn = contactItem.querySelector(".contact-item__delete-btn");
     const deletePopupYesBtn = contactItem.querySelector(".contact-item__delete-popup-yes-button");
     const deletePopupNoBtn = contactItem.querySelector(".contact-item__delete-popup-no-button");
@@ -155,6 +161,7 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
     let inputsStart = contactItem.querySelectorAll(".form-input");
     let customFieldCounter = 1;
 
+    // сворачивание/разворачивание контакной информации
     contactInfoBtn.addEventListener("click", () => {
         if (contactInfoContainer.style.maxHeight) {
             contactInfoContainer.style.maxHeight = null;
@@ -164,6 +171,8 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         }
     });
 
+    // при нажатии на кнопку редактирования поля формы становятся доступными для ввода данных и разворачивается блок с
+    // кнопками добавления нового поля и сохранения результата
     contactItemEditBtn.addEventListener("click", () => {
         saveAndAddBtnContainer.style.maxHeight = saveAndAddBtnContainer.scrollHeight + "px";
         contactItemEditBtn.setAttribute("disabled", "true");
@@ -177,6 +186,7 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         }
     });
 
+    // при нажатии на кнопку добавляется контейнер с полями для ввода имени нового поля и значения нового поля
     addInfoBtn.addEventListener("click", () => {
         const customFieldPairContainer = document.createElement("div");
         customFieldPairContainer.innerHTML =
@@ -200,8 +210,10 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         customFieldCounter++;
     });
 
+    // при нажатии на кнопку save данные в формате json отправляются на сервер при помощи ajax запроса
     contactInfoForm.addEventListener("submit", async (event) => {
         event.preventDefault();
+        // создаем объект который позже будет преобразован в json и сохраняем в него значения стандартных полей
         const obj = {};
         obj.id = contactInfoForm["contact-info-id"].value;
         obj.firstName = contactInfoForm["contact-info-first-name"].value;
@@ -209,6 +221,7 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         obj.phone = contactInfoForm["contact-info-phone"].value;
         obj.email = contactInfoForm["contact-info-email"].value;
 
+        // создаем объект для хранения значений пользовательских полей
         const other = {};
         const customFields = contactItem.querySelectorAll(".contact-info-custom-field-container");
         for (const customField of customFields) {
@@ -217,6 +230,7 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
             other[name] = value;
         }
 
+        // новые поля добавленные при помощи кнопки + тоже добавляются в переменную other
         const newFields = contactItem.querySelectorAll(".custom-field-pair-container");
         if (newFields.length > 0) {
             let newFieldCounter = 1;
@@ -229,7 +243,9 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
                 newFieldCounter++;
             }
         }
+        // сохраняем объект other как свойство объекта obj
         obj.other = other;
+        // отправляем запрос на обновление информации о контакте, новые данные отправляются в формате json
         const response = await fetch('http://localhost/contact_book/controller/update_contact.php', {
             method: "POST",
             body: JSON.stringify(obj),
@@ -237,16 +253,20 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
                 'Content-Type': 'application/json;charset=utf-8'
             }
         });
+        // ответ приходит также в формате json, который преобразуется в объект
         const json = await response.json();
 
+        // если подключение к БД было при произведено успешно
         if (json.connected) {
             const conErrMsg = contactInfoForm.querySelector(".connection-error-message");
             if (conErrMsg !== null) {
                 // убираем сообщение об ошибке если оно было раньше
                 conErrMsg.remove();
             }
+            // если данные о контакте были успешно обновлены,
             if (json.updated) {
                 contactItem.querySelector(".contact-item__name").innerHTML = `${obj.firstName} ${obj.lastName}`;
+                // если были добавлены новые поля то их отображение в форме меняется
                 if (newFields.length > 0) {
                     let newFieldCounter = 1;
                     for (const newField of newFields) {
@@ -267,22 +287,29 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
                     }
                     customFieldCounter = 1;
                 }
+                // поля становятся недоступными для редактирования
                 const inputsFinal = contactItem.querySelectorAll(".form-input");
                 for (const input of inputsFinal) {
                     input.setAttribute("disabled", "true");
                 }
+                // скрывается блок с кнопками добавления и сохранения
                 saveAndAddBtnContainer.style.maxHeight = null;
+                // кнопка редактирования вновь становится доступной
                 contactItemEditBtn.removeAttribute("disabled");
+                // если полей еще не максимальное количество то кнопка добавления полей становится активной
                 if (inputsFinal.length < 10) {
                     addInfoBtn.removeAttribute("disabled");
                 }
                 inputsStart = inputsFinal;
             }
+            // если контакт по каким то причинам не обновлен, то в форме выводится соответствующее сообщение
             else {
                 wrongMessage(contactInfoForm, "Contact is not updated, enter valid data.",
                     "update-error-message");
             }
         }
+        // если подключиться к БД не удалось то выводится соответствующее сообщение и в консоль выводится сообщение
+        // выброшенного исключения
         else {
             wrongMessage(contactInfoForm, "Connection problem, try again later",
                 "connection-error-message");
@@ -290,11 +317,14 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         }
     });
 
+    // Элементы для обработки события нажатия на кнопку удаления
     const buttonsBlock = contactItem.querySelector(".contact-item__buttons-container");
     const deleteContactPopup = contactItem.querySelector(".contact-item__delete-popup");
     const connectionFailurePopup = contactItem.querySelector(
         ".contact-item-delete-connection-failure-popup");
 
+    // при нажатии на кнопку удаления генерируется ajax запрос с id контакта, по которому этот контакт удаляется из БД и
+    // перестает отобраться в браузере
     deleteContactBtn.addEventListener("click", () => {
         buttonsBlock.style.visibility = "hidden";
         deleteContactPopup.style.display = "block";
@@ -333,10 +363,6 @@ function createContactItem(id, firstName, lastName, phone, email, other) {
         buttonsBlock.style.visibility = "visible";
         connectionFailurePopup.style.display = "none";
     });
-
-
-
-
 }
 
 
